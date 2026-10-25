@@ -1,0 +1,10 @@
+import { Router } from "express";
+import * as c from "../controllers/medicineController.js";
+import { protect, authorize } from "../middleware/auth.js";
+const r=Router();
+r.use(protect);
+r.get("/",c.list);
+r.post("/",authorize("super_admin","pharmacy_admin","inventory_manager"),c.create);
+r.put("/:id",authorize("super_admin","pharmacy_admin","inventory_manager"),c.update);
+r.delete("/:id",authorize("super_admin","pharmacy_admin","inventory_manager"),c.remove);
+export default r;
